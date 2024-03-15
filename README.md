@@ -1,1 +1,1 @@
-Project about real estate with methods, polymorphism and abstract classes
+Project about real estate with classes, methods, polymorphism and abstract classes
