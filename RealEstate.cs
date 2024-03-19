@@ -1,8 +1,3 @@
-// абстрактный класс нельзя использовать напрямую, а только в наследниках, нужен для того чтобы описать нечто абстрактное, какую то сущность без определения
-// protected объявляет метод или свойство защищенными (похоже на private) отличается тем, что доступен из любого места в текущем классе или в производных классах
-// virtual - для того чтобы иметь возможность переопределить какой-то метод, который находится в базовом классе, без virtual новую реализацию (перепись кода) мы сделать не можем
-// override - сочетается с virtual, для того чтобы в классе наследние сделать новую реализацию/переопределить метод базового класса
-
 using System;
 
 public abstract class RealEstate
@@ -130,5 +125,50 @@ public class LandPlot : RealEstate
     {
         double pricePerSquareMeter = price / area;
         Console.WriteLine("Cena par kvadrātmetru zemes gabalam ir: " + pricePerSquareMeter + " EUR.");
+    }
+}
+
+public class Apartment : RealEstate
+{
+    private int numberOfRooms;
+    private bool hasBalcony;
+
+    public Apartment(string address, double area, int numberOfRooms, bool hasBalcony, DateTime listingStartTime, DateTime listingEndTime) 
+        : base(address, area, listingStartTime, listingEndTime)
+    {
+        this.numberOfRooms = numberOfRooms;
+        this.hasBalcony = hasBalcony;
+    }
+
+    public Apartment(string address, double area, int numberOfRooms, bool hasBalcony) 
+        : base(address, area)
+    {
+        this.numberOfRooms = numberOfRooms;
+        this.hasBalcony = hasBalcony;
+    }
+
+    public override void DisplayInfo()
+    {
+        Console.WriteLine("Dzīvoklis atrodas adresē: " + address + ", ar kopējo platību " + area + " kvadrātmetri.");
+        Console.WriteLine("Dzīvoklī ir " + numberOfRooms + " istabas.");
+        Console.WriteLine("Balkons: " + (hasBalcony ? "Jā" : "Nē"));
+        Console.WriteLine("Izlikšanas sākuma laiks: " + listingStartTime);
+        Console.WriteLine("Izlikšanas beigu laiks: " + listingEndTime);
+    }
+
+    public override string GetDescription()
+    {
+        return "Dzīvoklis atrodas adresē: " + address + ", ar kopējo platību " + area + " kvadrātmetri. Dzīvoklī ir " + numberOfRooms + " istabas.";
+    }
+
+    public override int GetCapacity()
+    {
+        return numberOfRooms * 2;
+    }
+
+    public override void CalculatePricePerSquareMeter(double price)
+    {
+        double pricePerSquareMeter = price / area;
+        Console.WriteLine("Cena par kvadrātmetru dzīvoklim ir: " + pricePerSquareMeter + " EUR.");
     }
 }
